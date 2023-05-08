@@ -2,16 +2,13 @@ import React, {useContext, useState} from 'react';
 import exportFromJSON from 'export-from-json';
 import { StudentsContext } from '../../context/studentsContext';
 
-function Export() {
-
-  const [currentCohort, setCurrentCohort] = useState('');
+function Export({ currentCohort, setCurrentCohort }) {
 
   const studentContext = useContext(StudentsContext);
   const students = studentContext.studentsData;
   console.log(students);
 
-  const cohorts = ['MCSP-16', 'MCSP-17', 'MCSP-18', 'MCSP-19', 'MCSP-20', 'MCSP-21', 'MCSP-22'];
-  const fields = ['cohort', 'student_first', 'student_last', 'sec_clearance', 'hired'];
+  const fields = ['cohort', 'student_first', 'student_last', 'sec_clearance', 'career_status', 'course_status'];
   const milestoneFields = [{ name: 'mile_name' }, { name: 'progress_stat' }];
   const milestoneColumns = milestoneFields.map(field => `milestones.${field.name}`);
   const allFields = fields.concat(milestoneColumns);
@@ -40,24 +37,6 @@ function Export() {
       >
         Export to CSV
       </button>
-      <select
-        value={currentCohort}
-        onChange={(e) => setCurrentCohort(e.target.value)}
-      >
-        <option value=''>Select a MCSP</option>
-        {
-          cohorts.map((cohort, index) => {
-            return(
-              <option
-                key={index}
-                value={cohort}
-              >
-                {cohort}
-              </option>
-            )
-          })
-        }
-      </select>
     </div>
   )
 }
